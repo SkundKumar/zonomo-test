@@ -27,8 +27,8 @@ export function formatPrice(
 }
 
 export function constructMetadata({
-  title = 'Zonomo - the marketplace for digital assets',
-  description = 'Zonomo is an open-source marketplace for high-quality digital goods.',
+  title = 'Zonomo - the marketplace for Quick services',
+  description = 'Zonomo is an open-source marketplace for high-quality Quick House Services.',
   image = '/thumbnail.png',
   icons = '/favicon.ico',
   noIndex = false,
