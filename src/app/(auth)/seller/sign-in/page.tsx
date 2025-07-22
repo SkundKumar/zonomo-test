@@ -12,6 +12,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import { useUserProfile } from '@/hooks/use-auth'
+
+import { useEffect } from 'react'
 
 import {
   AuthCredentialsValidator,
@@ -55,6 +58,24 @@ const Page = () => {
   }: TSignInValidator) => {
     signIn({ email, password })
   }
+
+  
+const { profile, loading } = useUserProfile()
+  
+
+   useEffect(() => {
+    if (!loading && profile) {
+      if (profile.role === 'seller' || profile.role === 'admin') {
+        router.replace('/sell')
+      } else {
+        router.replace('/')
+      }
+    }
+  }, [profile, loading, router])
+
+  if (loading) return <div>Loading...</div>
+
+  // ...rest of your page...
 
   return (
     <>

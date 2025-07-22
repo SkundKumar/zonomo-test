@@ -21,7 +21,9 @@ import { trpc } from '@/trpc/client'
 import { toast } from 'sonner'
 import { ZodError } from 'zod'
 import { useRouter } from 'next/navigation'
+import { useUserProfile } from '@/hooks/use-auth'
 
+import { useEffect } from 'react'
 const Page = () => {
   const router = useRouter()
 
@@ -68,6 +70,23 @@ const Page = () => {
   }: TAuthCredentialsValidator) => {
     mutate({ email, password, name, mobile })
   }
+
+  const { profile, loading } = useUserProfile()
+    
+  
+     useEffect(() => {
+      if (!loading && profile) {
+        if (profile.role === 'seller' || profile.role === 'admin') {
+          router.replace('/sell')
+        } else {
+          router.replace('/')
+        }
+      }
+    }, [profile, loading, router])
+  
+    if (loading) return <div>Loading...</div>
+  
+    // ...rest of your page...
 
   return (
     <>
